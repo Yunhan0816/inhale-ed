@@ -7,7 +7,7 @@
 	<h4>Condition</h4>
 	<Chart class="graph" :d="patient.data.condition" />
 	<h4>Smoking Frequency</h4>
-	<Chart class="graph" :d="patient.data.smoke" />
+	<Chart class="graph" :d="patient.data.smokeFreq" />
 	
 </div>
 </template>

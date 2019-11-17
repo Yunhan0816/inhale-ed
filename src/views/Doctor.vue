@@ -1,76 +1,145 @@
 <template>
+  <v-app id="inspire">
+    <v-navigation-drawer
+      v-model="drawer"
+      app
+    >
+      <v-list-item>
+        <v-list-item-avatar>
+          <v-img src="@/assets/profile_placeholder.png"></v-img>
+        </v-list-item-avatar>
+      </v-list-item>
+      <v-list-item>
+        <v-list-item-content>
+        <v-list-item-title>John Doe</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+      <v-list dense>
+        <v-list-item :to="{ path: 'calendar' }">
+          <v-list-item-action>
+            <v-icon>mdi-calendar-month-outline</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Calendar</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item :to="{ path: 'howto' }">
+          <v-list-item-action>
+            <v-icon>mdi-comment-question-outline</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>How To</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item :to="{ path: 'info' }">
+          <v-list-item-action>
+            <v-icon>mdi-information-outline</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Info</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item link>
+          <v-list-item-action>
+            <v-icon>mdi-smoking</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Do You Smoke?</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
 
-<v-container>
-	<v-row class='sm-6'>
-	<v-col>
-	<h1>Patients</h1>
-	  <div v-for="patient in mainItems">
-	  	<v-row  @click="changePatient(patient)">
+      <template v-slot:append>
+        <v-list-item dense>
+          <v-list-item-title>Contact Information</v-list-item-title>
+        </v-list-item>
+        <v-divider/>
+        <v-list two-line dense>
+          <v-list-item >
+            <v-list-item-icon>
+              <v-icon>mdi-phone</v-icon>
+            </v-list-item-icon>
 
-	  		<v-col>{{patient.firstName}}</v-col>
-	  		<v-col>{{patient.lastName}}</v-col>
+            <v-list-item-content>
+              <v-list-item-title>(650) 555-1234</v-list-item-title>
+              <v-list-item-subtitle>Primary Care Physician</v-list-item-subtitle>
+            </v-list-item-content>
 
-	  	</v-row>
-	  </div>
+          </v-list-item>
 
-    </v-col>
-    <v-col>
+          <v-list-item>
+            <v-list-item-action></v-list-item-action>
 
-	<patientSummary class='summary' :patient="currentPatient"  />
-</v-col>
-</v-row>
-</v-container>
+            <v-list-item-content>
+              <v-list-item-title>(323) 555-6789</v-list-item-title>
+              <v-list-item-subtitle>Pulmonologist</v-list-item-subtitle>
+            </v-list-item-content>
+
+          </v-list-item>
+          <v-divider inset></v-divider>
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>mdi-email</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title>pcp@example.com</v-list-item-title>
+              <v-list-item-subtitle>Primary Care Physician</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-list-item >
+            <v-list-item-action></v-list-item-action>
+
+            <v-list-item-content>
+              <v-list-item-title>pulmo@example.com</v-list-item-title>
+              <v-list-item-subtitle>Pulmonologist</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </template>
+    </v-navigation-drawer>
+
+    <v-app-bar
+      app
+      clipped
+    >
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+      <v-toolbar-title>Inhale-ED</v-toolbar-title>
+    </v-app-bar>
+
+    <v-content>
+      <v-container
+        class="fill-height"
+        fluid
+      >
+      <Doctor />
+      </v-container>
+    </v-content>
+
+    <v-footer app>
+      <span>&copy; BostonHacks 2019</span>
+    </v-footer>
+  </v-app>
 </template>
 
+
+
+
 <script>
+	import Doctor from '../components/Doctor'
+  export default {
+    props: {
+      source: String,
+    },
 
-import patientSummary from '../components/patientSummary'
+    data: () => ({
+      drawer: null,
+    }),
 
-var d1 = { inhalerFreq: [0, 2, 5, 9, 5, 10, 3, 5, -4, -10, 1, 8, 2, 9, 0],
-			condition: [0, 2, 5, 9, 5, 10, 3, 5, -4, -10, 1, 8, 2, 9, 0],
-			smokeFreq: [0, 2, 5, 9, 5, 10, 3, 5, -4, -10, 1, 8, 2, 9, 0]
-		};
-var d2 = { inhalerFreq: [45,6,3,2,6,7,8,8,9,1,3,1,1,0,3],
-			condition: [45,6,3,2,6,7,8,8,9,1,3,1,1,0,3],
-			smokeFreq: [45,6,3,2,6,7,8,8,9,1,3,1,1,0,3]
-		};
-var d3 = { inhalerFreq: [0, 2, 5, 9, 5, 10, 3, 5, -4, -10, 1, 8, 2, 9, 0],
-			condition: [0, 2, 5, 9, 5, 10, 3, 5, -4, -10, 1, 8, 2, 9, 0],
-			smokeFreq: [0, 2, 5, 9, 5, 10, 3, 5, -4, -10, 1, 8, 2, 9, 0]
-		};
-export default{
-	name: "Doctor",
-	components: {
-		patientSummary
-	},
-	data(){
-		return {
-		mainHeaders: [
-          { text: 'First Name', value: 'firstName' },
-          { text: 'Last Name', value: 'lastName' },
-        ],
-  
-        mainItems: [
-          { firstName: 'Marc ', lastName: 'Last name', patientId: '1234', data: d1},
-          { firstName: 'Wallace  ', lastName: 'Last name', patientId: '1234',  data: d2},
-          { firstName: 'Enrique ', lastName: 'Last name', patientId: '1234', data: d3},
-         ],
-         currentPatient: { firstName: 'Marc ', lastName: 'Last name', patientId: '1234'},
-
-		}
-	},
-	methods: {
-		changePatient(patientId) {
-			this.currentPatient = patientId;
-		}
-	}
-}
+    components: {
+    	Doctor
+      //
+    }
+  }
 </script>
-
-<style scoped>
-
-
-.v-col{
-	width: 50%;
-}
-</style>

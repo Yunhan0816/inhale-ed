@@ -113,7 +113,7 @@
         class="fill-height"
         fluid
       >
-      <h1>ADD STUFF HERE</h1>
+      <Doctor />
       </v-container>
     </v-content>
 
@@ -124,6 +124,7 @@
 </template>
 
 <script>
+	
   export default {
     props: {
       source: String,
@@ -134,6 +135,7 @@
     }),
 
     components: {
+    	Doctor
       //
     }
   }

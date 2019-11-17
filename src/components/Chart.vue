@@ -26,7 +26,7 @@
 
 <script>
   const gradients = [
-    ['#222'],
+    ['white'],
     ['#42b3f4'],
     ['red', 'orange', 'yellow'],
     ['purple', 'violet'],
