@@ -1,6 +1,8 @@
 <template>
   <v-container fluid>
     <v-sparkline
+      height="30%"
+
       :value="d"
       :gradient="gradient"
       :smooth="radius || false"
@@ -52,3 +54,6 @@
     }),
   }
 </script>
+<style scoped>
+  
+</style>
